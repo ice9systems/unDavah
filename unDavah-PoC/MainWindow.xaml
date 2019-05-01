@@ -5,15 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:unDavah_PoC"
         mc:Ignorable="d"
-        Title="[unDavah] Clipboard confirmation" Height="300" Width="600" WindowStartupLocation="CenterScreen">
+        Title="[unDavah] Clipboard confirmation" Height="400" Width="1024" WindowStartupLocation="CenterScreen">
     <Grid Margin="0,0,0,0" Background="#FFF7F5F5">
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
-            <ColumnDefinition Width="100"/>
         </Grid.ColumnDefinitions>
-        <TextBlock Height="34" Margin="10,10,0,0" TextWrapping="Wrap" Text="The clipboard contains multiple lines of text. Would you like to continue?" VerticalAlignment="Top"/>
-        <TextBox x:Name="clipboardContnt" Margin="10,50,0,10" TextWrapping="Wrap" Text="{Binding Path=contentStr}" Grid.ColumnSpan="1" FontFamily="Courier New" FontSize="18" VerticalScrollBarVisibility="Auto"/>
-        <Button Content="OK" Margin="10,0,10,10.2" VerticalAlignment="Bottom" Click="Confirmed" Grid.Column="1" Height="19" BorderBrush="#FFF36B04" Background="#FFF49A55"/>
-        <Button Content="Cancel" Margin="10,0,10,39" Click="Cancel" Grid.Column="1" Height="19" VerticalAlignment="Bottom" Background="#FF90E569" BorderBrush="#FF48B902"/>
+        <TextBlock Height="34" Margin="10,10,99.6,0" TextWrapping="Wrap" Text="The clipboard contains multiple lines of text. Would you like to continue?" VerticalAlignment="Top" FontFamily="Meiryo UI" FontSize="16"/>
+        <TextBox x:Name="clipboardContnt" IsReadOnly="True" Margin="10,50,10,39" TextWrapping="Wrap" Text="{Binding Path=contentStr}" Grid.ColumnSpan="1" FontFamily="Courier New" FontSize="18" VerticalScrollBarVisibility="Auto"/>
+        <Button Content="OK" Click="Confirmed" Margin="0,0,0,10" VerticalAlignment="Bottom" HorizontalAlignment="Center" MinWidth="100" Height="19" BorderBrush="#FFF36B04" Background="#FFF49A55"/>
+        <Button Content="Cancel" Click="Cancel" Margin="0,0,10,10" VerticalAlignment="Bottom" HorizontalAlignment="Right" MinWidth="100" Height="19" Background="#FF90E569" BorderBrush="#FF48B902"/>
     </Grid>
 </Window>
