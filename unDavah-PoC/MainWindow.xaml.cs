@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Runtime.InteropServices;
+using System.Text.RegularExpressions;
 
 namespace unDavah_PoC
 {
@@ -37,7 +38,6 @@ namespace unDavah_PoC
         };
 
 
-        private UDClipboardContent cb = new UDClipboardContent();
         private string rawClipboardStr;
         private Win32Point mousePointAtStartup = new Win32Point();
 
@@ -48,19 +48,30 @@ namespace unDavah_PoC
 
             GetCursorPos(ref mousePointAtStartup);
 
-            clipboardContnt.DataContext = cb;
+            //clipboardContnt.DataContext = cb;
             if (Clipboard.ContainsText())
             {
                 rawClipboardStr = Clipboard.GetText();
+                String modifiedClipboardStr = rawClipboardStr;
 
-                string replaceFrom = Environment.NewLine;
-                String replaceTo = "↵" + Environment.NewLine;
-                ////Regex re = new Regex(replaceFrom);
-                //string modifiedClipboardStr = re.Replace(rawClipboardStr, replaceTo);
+                Regex re = new Regex("<");
+                modifiedClipboardStr = re.Replace(modifiedClipboardStr, "&lt;");
+                re = new Regex(">");
+                modifiedClipboardStr = re.Replace(modifiedClipboardStr, "&gt;");
+                re = new Regex("&");
+                modifiedClipboardStr = re.Replace(modifiedClipboardStr, "&amp;");
+                re = new Regex(" ");
+                modifiedClipboardStr = re.Replace(modifiedClipboardStr, "<style fgcolor='#00a1e9'>\u2423</style>");
 
-                string modifiedClipboardStr = rawClipboardStr.Replace(replaceFrom, replaceTo);
-                modifiedClipboardStr = modifiedClipboardStr.Replace(" ", "\u00a0");
-                cb.contentStr = modifiedClipboardStr;
+                re = new Regex(Environment.NewLine);
+                modifiedClipboardStr = re.Replace(modifiedClipboardStr, "<style bgcolor='#ff0000' fgcolor='#00ffff'>↵</style><br/>");
+
+                re = new Regex("^");
+                modifiedClipboardStr = re.Replace(modifiedClipboardStr, "<texts>");
+                re = new Regex("$");
+                modifiedClipboardStr = re.Replace(modifiedClipboardStr, "</texts>");
+
+                clipboardContnt.Text = modifiedClipboardStr;
             }
         }
 
