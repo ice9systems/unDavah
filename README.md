@@ -17,13 +17,13 @@ unDavahは、PuTTYやWindows 10でのコマンドプロンプトなど、右ク�
 
 これを利用してAHK側で、呼び出す前にunDavahが必要かどうかの判定を、終了後に右クリックする処理を行います。  
 (The AHK must first determine if unDavah is required before calling it. Then, send a right click after finishing.)
-## なぜ作ったか (Why did I write it?)
+## なぜ作ったか (Why did I write this tool?)
 元々はAHKスクリプトのみで実現していた機能ですが、マルチモニタ環境でモニタのスケーリングが混在している場合にうまく動作しないことがありました。調べてみると、マウスポインタの座標がうまく扱えていない様子ですし、また長大なテキストがクリップボードに入っているとダイアログが画面からはみ出すようなこともあったため、休暇を利用して作成しました。  
 (Originally implemented only in AHK scripts, it does not work well with mixed monitor scaling in multi-monitor environments. I investigated the cause. As a result, I found that the coordinates of the mouse pointer were not handled well. Also, if I use it when I have long text on the clipboard, the dialog will overflow the screen. So I created this using my vacation.)
 
 ## AHKスクリプトのサンプル (Sample of AHK script)
 バイナリを`C:\opt\unDavah\unDavah-PoC.exe`に配置したなら、次のように.ahkスクリプトから呼び出せます。  
-(If you put the binaries in `C: \opt \unDavah \unDavah-PoC.exe `, you can call them from the .ahk script as follows:.)
+(If you put the binaries in `C: \opt\unDavah\unDavah-PoC.exe`, you can call them from the .ahk script as follows:.)
 ```ahk
 $RButton::
 MouseGetPos,,, aWin
@@ -51,7 +51,7 @@ return
 ```
 ## 動作環境 (System Requirements)
 Windows 10のみ。  
-(Only works with Windows 10.)
+(Only works with Windows 10.)  
 バージョン1809(Windows 10 October 2018 Update)でのみ動作確認しています。  
 (I only tested it on version 1809 [Windows 10 October 2018 Update].)
 ## その他 (miscellaneous notes)
