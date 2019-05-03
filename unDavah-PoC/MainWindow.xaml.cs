@@ -60,8 +60,11 @@ namespace unDavah_PoC
                 modifiedClipboardStr = re.Replace(modifiedClipboardStr, "&gt;");
                 re = new Regex("&");
                 modifiedClipboardStr = re.Replace(modifiedClipboardStr, "&amp;");
+
                 re = new Regex(" ");
                 modifiedClipboardStr = re.Replace(modifiedClipboardStr, "<style fgcolor='#00a1e9'>\u2423</style>");
+                re = new Regex("\t");
+                modifiedClipboardStr = re.Replace(modifiedClipboardStr, "<style bgcolor='#ffff00' fgcolor='#ff0000'>[\\t]</style>");
 
                 re = new Regex(Environment.NewLine);
                 modifiedClipboardStr = re.Replace(modifiedClipboardStr, "<style bgcolor='#ff0000' fgcolor='#00ffff'>↵</style><br/>");
@@ -80,8 +83,7 @@ namespace unDavah_PoC
             string currentClipboardStr = Clipboard.GetText();
             if (rawClipboardStr != currentClipboardStr)
             {
-                MessageBox.Show("クリップボードの内容が変化したようです。\n" +
-                                "再度確認ください。",
+                MessageBox.Show("The contents of the clipboard seem to have changed. Please check it again.",
                                 "[unDavah] Clipboard mismatch",
                                 MessageBoxButton.OK,
                                 MessageBoxImage.Exclamation);

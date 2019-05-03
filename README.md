@@ -17,7 +17,7 @@ unDavahは、PuTTYやWindows 10でのコマンドプロンプトなど、右ク�
 
 これを利用してAHK側で、呼び出す前にunDavahが必要かどうかの判定を、終了後に右クリックする処理を行います。  
 (The AHK must first determine if unDavah is required before calling it. Then, send a right click after finishing.)
-## なぜ作ったか (Why did I write this tool?)
+## なぜ作ったか (Why did I write unDavah?)
 元々はAHKスクリプトのみで実現していた機能ですが、マルチモニタ環境でモニタのスケーリングが混在している場合にうまく動作しないことがありました。調べてみると、マウスポインタの座標がうまく扱えていない様子ですし、また長大なテキストがクリップボードに入っているとダイアログが画面からはみ出すようなこともあったため、休暇を利用して作成しました。  
 (Originally implemented only in AHK scripts, it does not work well with mixed monitor scaling in multi-monitor environments. I investigated the cause. As a result, I found that the coordinates of the mouse pointer were not handled well. Also, if I use it when I have long text on the clipboard, the dialog will overflow the screen. So I created this using my vacation.)
 
@@ -56,4 +56,4 @@ Windows 10のみ。
 (I only tested it on version 1809 [Windows 10 October 2018 Update].)
 ## その他 (miscellaneous notes)
 最初のバージョンは、平成最後の日に書かれ、令和の初日に公開されました。  
-(The first version was written on the last day of the Heisei era and released on the first day of the Rewa era.)
+(The first version was written on the last day of the Heisei era and released on the first day of the Reiwa era.)
