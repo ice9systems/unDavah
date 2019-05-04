@@ -9,7 +9,7 @@ namespace com.undavah.unDavah_PoC
     /// </summary>
     public partial class MainWindow : Window
     {
-        private string rawClipboardStr;
+        private ClipboardInfo cbInfo;
         private Point mousePointAtStartup;
         public MainWindow()
         {
@@ -22,8 +22,10 @@ namespace com.undavah.unDavah_PoC
 
             if (Clipboard.ContainsText())
             {
-                rawClipboardStr = Clipboard.GetText();
-                String modifiedClipboardStr = DoEmphasis(rawClipboardStr, empRules);
+                cbInfo = new ClipboardInfo();
+                cbInfo.setCurrentClipboardText();
+
+                String modifiedClipboardStr = DoEmphasis(cbInfo.text, empRules);
 
                 clipboardContnt.Text = modifiedClipboardStr;
             }
@@ -63,14 +65,12 @@ namespace com.undavah.unDavah_PoC
                 aRule.replaceTo + "</style>";
                 aStr = Regex.Replace(aStr, aRule.matchTo, replaceStr);
             }
-
             return aStr;
         }
 
         private void Confirmed(object sender, RoutedEventArgs e)
         {
-            string currentClipboardStr = Clipboard.GetText();
-            if (rawClipboardStr != currentClipboardStr)
+            if (!cbInfo.isUpToDate())
             {
                 MessageBox.Show("The contents of the clipboard seem to have changed. " +
                     "Please check it again.",

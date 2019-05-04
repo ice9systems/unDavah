@@ -71,7 +71,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ClipboardInfo.cs" />
     <Compile Include="EmphasisDefinitions.cs" />
+    <Compile Include="mouseCursorLib.cs" />
     <Compile Include="UDVTextBlock.xaml.cs">
       <DependentUpon>UDVTextBlock.xaml</DependentUpon>
     </Compile>
