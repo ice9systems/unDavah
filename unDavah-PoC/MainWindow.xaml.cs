@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Windows;
-using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 
 namespace com.undavah.unDavah_PoC
@@ -10,30 +9,14 @@ namespace com.undavah.unDavah_PoC
     /// </summary>
     public partial class MainWindow : Window
     {
-        [DllImport("User32.dll", CallingConvention = CallingConvention.StdCall)]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        private static extern bool SetCursorPos(int X, int Y);
-
-        [DllImport("user32.dll", CallingConvention = CallingConvention.StdCall)]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        internal static extern bool GetCursorPos(ref Win32Point pt);
-
-        [StructLayout(LayoutKind.Sequential)]
-        internal struct Win32Point
-        {
-            public Int32 X;
-            public Int32 Y;
-        };
-
         private string rawClipboardStr;
-        private Win32Point mousePointAtStartup = new Win32Point();
-
+        private Point mousePointAtStartup;
         public MainWindow()
         {
             InitializeComponent();
             Environment.ExitCode = 1;
 
-            GetCursorPos(ref mousePointAtStartup);
+            mousePointAtStartup = mouseCursorLib.GetPos();
 
             EmphasisRules empRules = EmphasisDefinitions.GetEmphasisRules();
 
@@ -97,7 +80,7 @@ namespace com.undavah.unDavah_PoC
                 Application.Current.Shutdown();
             }
 
-            SetCursorPos(mousePointAtStartup.X, mousePointAtStartup.Y);
+            mouseCursorLib.SetPos(mousePointAtStartup);
             Environment.ExitCode = 0;
             Application.Current.Shutdown();
         }
