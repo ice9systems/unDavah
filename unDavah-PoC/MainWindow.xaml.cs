@@ -1,22 +1,7 @@
 ﻿using System;
-using System.IO;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
-using System.Runtime.Serialization;
-using System.Runtime.Serialization.Json;
 
 namespace com.undavah.unDavah_PoC
 {
@@ -55,7 +40,6 @@ namespace com.undavah.unDavah_PoC
             if (Clipboard.ContainsText())
             {
                 rawClipboardStr = Clipboard.GetText();
-                //String modifiedClipboardStr = rawClipboardStr;
                 String modifiedClipboardStr = DoEmphasis(rawClipboardStr, empRules);
 
                 clipboardContnt.Text = modifiedClipboardStr;

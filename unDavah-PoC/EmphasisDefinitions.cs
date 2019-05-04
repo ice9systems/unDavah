@@ -23,19 +23,9 @@ namespace com.undavah.unDavah_PoC
                     ],
                     ""rules"": [
                         {
-                            ""description"": ""foobar"",
+                            ""description"": ""Tab"",
                             ""matchTo"": ""\\t"",
                             ""replaceTo"": ""[\\t]"",
-                            ""fgcolor"": ""#000000"",
-                            ""bgcolor"": ""#ffff00"",
-                            ""warn"": {
-                                ""type"": ""CTRL""
-                            }
-                        },
-                        {
-                            ""description"": ""hogefuga"",
-                            ""matchTo"": ""conf t"",
-                            ""replaceTo"": ""[\b]"",
                             ""fgcolor"": ""#000000"",
                             ""bgcolor"": ""#ffff00"",
                             ""warn"": {
@@ -55,6 +45,8 @@ namespace com.undavah.unDavah_PoC
                     ]
                 }
                 ";
+        //強調定義終了
+        //--------------------------------------
 
         static public EmphasisRules GetEmphasisRules()
         {
