@@ -21,7 +21,7 @@ namespace com.undavah.unDavah_PoC
     /// <summary>
     /// MyTextBlock.xaml の相互作用ロジック
     /// </summary>
-    public partial class UVDTextBlock : UserControl
+    public partial class UDVTextBlock : UserControl
     {
         private const String DEFAULT_FONT_COLOR_FG = "#00EE00";
         private const String DEFAULT_FONT_COLOR_BG = "#000000";
@@ -31,10 +31,10 @@ namespace com.undavah.unDavah_PoC
             DependencyProperty.Register(
                 nameof(Text),
                 typeof(string),
-                typeof(UVDTextBlock),
+                typeof(UDVTextBlock),
                 new PropertyMetadata(null, (s, e) =>
                 {
-                    ((UVDTextBlock)s).Parse();
+                    ((UDVTextBlock)s).Parse();
                 }));
 
         public string Text
@@ -45,6 +45,7 @@ namespace com.undavah.unDavah_PoC
 
         public void Parse()
         {
+            
             this.TextBlock.Inlines.Clear();
             try
             {
@@ -113,7 +114,7 @@ namespace com.undavah.unDavah_PoC
 
             return aStr;
         }
-        public UVDTextBlock()
+        public UDVTextBlock()
         {
             InitializeComponent();
         }

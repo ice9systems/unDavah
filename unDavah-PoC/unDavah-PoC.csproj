@@ -71,7 +71,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="UDClipboardContent.cs" />
     <Compile Include="UDVTextBlock.xaml.cs">
       <DependentUpon>UDVTextBlock.xaml</DependentUpon>
     </Compile>

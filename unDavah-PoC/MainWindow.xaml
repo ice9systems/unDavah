@@ -12,7 +12,7 @@
         </Grid.ColumnDefinitions>
         <TextBlock Height="34" Margin="10,10,99.6,0" TextWrapping="Wrap" Text="The clipboard contains multiple lines of text. Would you like to continue?" VerticalAlignment="Top" FontFamily="Meiryo UI" FontSize="16"/>
         <Border Margin="10,50,10,39" BorderThickness="1" BorderBrush="Black">
-            <local:UVDTextBlock x:Name="clipboardContnt"/>
+            <local:UDVTextBlock x:Name="clipboardContnt"/>
         </Border>
         <Button Content="OK" Click="Confirmed" Margin="0,0,0,10" VerticalAlignment="Bottom" HorizontalAlignment="Center" MinWidth="100" Height="19" BorderBrush="#FFF36B04" Background="#FFF49A55"/>
         <Button Content="Cancel" Click="Cancel" Margin="0,0,10,10" VerticalAlignment="Bottom" HorizontalAlignment="Right" MinWidth="100" Height="19" Background="#FF90E569" BorderBrush="#FF48B902"/>
