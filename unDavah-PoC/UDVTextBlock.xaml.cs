@@ -14,8 +14,9 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Xml.Linq;
+using System.Text.RegularExpressions;
 
-namespace unDavah_PoC
+namespace com.undavah.unDavah_PoC
 {
     /// <summary>
     /// MyTextBlock.xaml の相互作用ロジック
@@ -57,7 +58,7 @@ namespace unDavah_PoC
                                 XText textNode = (XText)node;
                                 this.TextBlock.Inlines.Add(new Run
                                 {
-                                    Text = textNode.Value,
+                                    Text = restoreEscape(textNode.Value),
                                     Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString(DEFAULT_FONT_COLOR_FG)),
                                     Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString(DEFAULT_FONT_COLOR_BG))
                                 });
@@ -77,7 +78,7 @@ namespace unDavah_PoC
 
                                             this.TextBlock.Inlines.Add(new Run
                                             {
-                                                Text = text,
+                                                Text = restoreEscape(text),
                                                 Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString(fgcolor)),
                                                 Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString(bgcolor))
                                             });
@@ -100,6 +101,17 @@ namespace unDavah_PoC
                 }
             }
             catch { }
+        }
+        private String restoreEscape (String aStr)
+        {
+            Regex re = new Regex("&lt;");
+            aStr = re.Replace(aStr, "<");
+            re = new Regex("&gt;");
+            aStr = re.Replace(aStr, ">");
+            re = new Regex("&amp;");
+            aStr = re.Replace(aStr, "&");
+
+            return aStr;
         }
         public UVDTextBlock()
         {

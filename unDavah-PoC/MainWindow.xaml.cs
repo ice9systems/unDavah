@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,8 +15,10 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Json;
 
-namespace unDavah_PoC
+namespace com.undavah.unDavah_PoC
 {
     /// <summary>
     /// MainWindow.xaml の相互作用ロジック
@@ -48,6 +51,8 @@ namespace unDavah_PoC
 
             GetCursorPos(ref mousePointAtStartup);
 
+            EmphasisRules empRules = ReadConfig();
+
             //clipboardContnt.DataContext = cb;
             if (Clipboard.ContainsText())
             {
@@ -61,13 +66,24 @@ namespace unDavah_PoC
                 re = new Regex("&");
                 modifiedClipboardStr = re.Replace(modifiedClipboardStr, "&amp;");
 
-                re = new Regex(" ");
-                modifiedClipboardStr = re.Replace(modifiedClipboardStr, "<style fgcolor='#00a1e9'>\u2423</style>");
-                re = new Regex("\t");
-                modifiedClipboardStr = re.Replace(modifiedClipboardStr, "<style bgcolor='#ffff00' fgcolor='#ff0000'>[\\t]</style>");
+                re = new Regex("\x20");
+                modifiedClipboardStr = re.Replace(modifiedClipboardStr,
+                    "<style bgcolor='" + empRules.global.whiteSpace0x20.bgcolor +
+                    "' fgcolor='" + empRules.global.whiteSpace0x20.fgcolor + 
+                    "'>\u2423</style>");
+                re = new Regex(empRules.rules[0].matchTo);
+                modifiedClipboardStr = re.Replace(modifiedClipboardStr,
+                    "<style bgcolor='" + empRules.rules[0].bgcolor +
+                    "' fgcolor='" + empRules.rules[0].fgcolor +
+                    "'>" + empRules.rules[0].replaceTo + "</style>");
+                //re = new Regex("\t");
+                //modifiedClipboardStr = re.Replace(modifiedClipboardStr, "<style bgcolor='#ffff00' fgcolor='#ff0000'>[\\t]</style>");
 
                 re = new Regex(Environment.NewLine);
-                modifiedClipboardStr = re.Replace(modifiedClipboardStr, "<style bgcolor='#ff0000' fgcolor='#00ffff'>↵</style><br/>");
+                modifiedClipboardStr = re.Replace(modifiedClipboardStr, 
+                    "<style bgcolor='" + empRules.global.newline.bgcolor +
+                    "' fgcolor='" + empRules.global.newline.fgcolor +
+                    "'>↵</style><br/>");
 
                 re = new Regex("^");
                 modifiedClipboardStr = re.Replace(modifiedClipboardStr, "<texts>");
@@ -77,6 +93,58 @@ namespace unDavah_PoC
                 clipboardContnt.Text = modifiedClipboardStr;
             }
         }
+
+        private EmphasisRules ReadConfig()
+        {
+            String testJson = @"
+                                {
+                                    ""global"": {
+                                        ""newline"": {
+                                            ""fgcolor"": ""#00ffff"",
+                                            ""bgcolor"": ""#ff0000""
+                                        },
+                                        ""whiteSpace0x20"": {
+                                            ""fgcolor"": ""#00ffff"",
+                                            ""bgcolor"": ""#000000""
+                                        }
+                                    },
+                                    ""rules"": [
+                                        {
+                                            ""description"": ""foobar"",
+                                            ""matchTo"": ""\t"",
+                                            ""replaceTo"": ""[\t]"",
+                                            ""fgcolor"": ""#000000"",
+                                            ""bgcolor"": ""#ffff00"",
+                                            ""warn"": {
+                                                ""type"": ""CTRL""
+                                            }
+                                        },
+                                        {
+                                            ""description"": ""hogefuga"",
+                                            ""matchTo"": ""\b"",
+                                            ""replaceTo"": ""[\b]"",
+                                            ""fgcolor"": ""#000000"",
+                                            ""bgcolor"": ""#ffff00"",
+                                            ""warn"": {
+                                                ""type"": ""CTRL""
+                                            }
+                                        }
+                                    ]
+                                }";
+
+
+            EmphasisRules rules;
+
+            DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(EmphasisRules));
+            using (MemoryStream ms = new MemoryStream(Encoding.UTF8.GetBytes(testJson)))
+            {
+                 rules = (EmphasisRules) serializer.ReadObject(ms);
+            }
+
+            return rules;
+
+        }
+
 
         private void Confirmed(object sender, RoutedEventArgs e)
         {
