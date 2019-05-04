@@ -40,7 +40,6 @@ namespace com.undavah.unDavah_PoC
             public Int32 Y;
         };
 
-
         private string rawClipboardStr;
         private Win32Point mousePointAtStartup = new Win32Point();
 
@@ -51,110 +50,66 @@ namespace com.undavah.unDavah_PoC
 
             GetCursorPos(ref mousePointAtStartup);
 
-            EmphasisRules empRules = ReadConfig();
+            EmphasisRules empRules = EmphasisDefinitions.GetEmphasisRules();
 
-            //clipboardContnt.DataContext = cb;
             if (Clipboard.ContainsText())
             {
                 rawClipboardStr = Clipboard.GetText();
-                String modifiedClipboardStr = rawClipboardStr;
-
-                Regex re = new Regex("<");
-                modifiedClipboardStr = re.Replace(modifiedClipboardStr, "&lt;");
-                re = new Regex(">");
-                modifiedClipboardStr = re.Replace(modifiedClipboardStr, "&gt;");
-                re = new Regex("&");
-                modifiedClipboardStr = re.Replace(modifiedClipboardStr, "&amp;");
-
-                re = new Regex("\x20");
-                modifiedClipboardStr = re.Replace(modifiedClipboardStr,
-                    "<style bgcolor='" + empRules.global.whiteSpace0x20.bgcolor +
-                    "' fgcolor='" + empRules.global.whiteSpace0x20.fgcolor + 
-                    "'>\u2423</style>");
-                re = new Regex(empRules.rules[0].matchTo);
-                modifiedClipboardStr = re.Replace(modifiedClipboardStr,
-                    "<style bgcolor='" + empRules.rules[0].bgcolor +
-                    "' fgcolor='" + empRules.rules[0].fgcolor +
-                    "'>" + empRules.rules[0].replaceTo + "</style>");
-                //re = new Regex("\t");
-                //modifiedClipboardStr = re.Replace(modifiedClipboardStr, "<style bgcolor='#ffff00' fgcolor='#ff0000'>[\\t]</style>");
-
-                re = new Regex(Environment.NewLine);
-                modifiedClipboardStr = re.Replace(modifiedClipboardStr, 
-                    "<style bgcolor='" + empRules.global.newline.bgcolor +
-                    "' fgcolor='" + empRules.global.newline.fgcolor +
-                    "'>↵</style><br/>");
-
-                re = new Regex("^");
-                modifiedClipboardStr = re.Replace(modifiedClipboardStr, "<texts>");
-                re = new Regex("$");
-                modifiedClipboardStr = re.Replace(modifiedClipboardStr, "</texts>");
+                //String modifiedClipboardStr = rawClipboardStr;
+                String modifiedClipboardStr = DoEmphasis(rawClipboardStr, empRules);
 
                 clipboardContnt.Text = modifiedClipboardStr;
             }
         }
 
-        private EmphasisRules ReadConfig()
+        private string DoEmphasis(String aStr, EmphasisRules rules)
         {
-            String testJson = @"
-                                {
-                                    ""global"": {
-                                        ""newline"": {
-                                            ""fgcolor"": ""#00ffff"",
-                                            ""bgcolor"": ""#ff0000""
-                                        },
-                                        ""whiteSpace0x20"": {
-                                            ""fgcolor"": ""#00ffff"",
-                                            ""bgcolor"": ""#000000""
-                                        }
-                                    },
-                                    ""rules"": [
-                                        {
-                                            ""description"": ""foobar"",
-                                            ""matchTo"": ""\t"",
-                                            ""replaceTo"": ""[\t]"",
-                                            ""fgcolor"": ""#000000"",
-                                            ""bgcolor"": ""#ffff00"",
-                                            ""warn"": {
-                                                ""type"": ""CTRL""
-                                            }
-                                        },
-                                        {
-                                            ""description"": ""hogefuga"",
-                                            ""matchTo"": ""\b"",
-                                            ""replaceTo"": ""[\b]"",
-                                            ""fgcolor"": ""#000000"",
-                                            ""bgcolor"": ""#ffff00"",
-                                            ""warn"": {
-                                                ""type"": ""CTRL""
-                                            }
-                                        }
-                                    ]
-                                }";
+            // Escaping Characters Used in XML
+            aStr = Regex.Replace(aStr, "<", "&lt;");
+            aStr = Regex.Replace(aStr, ">", "&gt;");
+            aStr = Regex.Replace(aStr, "&", "&amp;");
 
+            // apply High Priority rules
+            aStr = applyStyleTag(aStr, rules.doFirst);
 
-            EmphasisRules rules;
+            // apply other rules
+            aStr = applyStyleTag(aStr, rules.rules);
 
-            DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(EmphasisRules));
-            using (MemoryStream ms = new MemoryStream(Encoding.UTF8.GetBytes(testJson)))
-            {
-                 rules = (EmphasisRules) serializer.ReadObject(ms);
-            }
+            // Apply last rules
+            aStr = applyStyleTag(aStr, rules.doLast);
 
-            return rules;
+            // add a ROOT node
+            aStr = Regex.Replace(aStr, "^", "<texts>");
+            aStr = Regex.Replace(aStr, "$", "</texts>");
 
+            return aStr;
         }
 
+        private String applyStyleTag(String aStr, EmphasisRules.Rule[] rules)
+        {
+            String replaceStr;
+            foreach (EmphasisRules.Rule aRule in rules)
+            {
+                replaceStr =
+                "<style bgcolor='" + aRule.bgcolor +
+                "' fgcolor='" + aRule.fgcolor + "'>" +
+                aRule.replaceTo + "</style>";
+                aStr = Regex.Replace(aStr, aRule.matchTo, replaceStr);
+            }
+
+            return aStr;
+        }
 
         private void Confirmed(object sender, RoutedEventArgs e)
         {
             string currentClipboardStr = Clipboard.GetText();
             if (rawClipboardStr != currentClipboardStr)
             {
-                MessageBox.Show("The contents of the clipboard seem to have changed. Please check it again.",
-                                "[unDavah] Clipboard mismatch",
-                                MessageBoxButton.OK,
-                                MessageBoxImage.Exclamation);
+                MessageBox.Show("The contents of the clipboard seem to have changed. " +
+                    "Please check it again.",
+                    "[unDavah] Clipboard mismatch",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Exclamation);
                 Application.Current.Shutdown();
             }
 
@@ -163,7 +118,7 @@ namespace com.undavah.unDavah_PoC
             Application.Current.Shutdown();
         }
 
-        private void Cancel(object sender, RoutedEventArgs e)
+        private void Canceled(object sender, RoutedEventArgs e)
         {
             Application.Current.Shutdown();
         }

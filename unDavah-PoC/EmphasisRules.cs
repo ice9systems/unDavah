@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,14 +9,16 @@ using System.Runtime.Serialization.Json;
 
 namespace com.undavah.unDavah_PoC
 {
+
     [DataContract]
     class EmphasisRules
     {
-
         [DataMember]
-        public Global global { get; set; }
+        public Rule[] doFirst { get; set; }
         [DataMember]
         public Rule[] rules { get; set; }
+        [DataMember]
+        public Rule[] doLast { get; set; }
 
         [DataContract]
         public class Global
