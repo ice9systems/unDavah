@@ -19,14 +19,21 @@ namespace com.undavah.unDavah_PoC
 
             EmphasisRules empRules = EmphasisDefinitions.GetEmphasisRules();
 
-            if (Clipboard.ContainsText())
+            cbInfo = new ClipboardInfo();
+            cbInfo.SetCurrentClipboardText();
+            if (cbInfo.ContainsText)
             {
-                cbInfo = new ClipboardInfo();
-                cbInfo.setCurrentClipboardText();
-
                 clipboardContnt.EmphasisRules = empRules;
                 clipboardContnt.TextForDisplay = cbInfo.Text;
+
+                WarnMessage.Text = cbInfo.WarnMessage();
             }
+            else
+            {
+                WarnMessage.Text = "The clipboard contains not text.";
+            }
+
+             
         }
 
         private void Confirmed(object sender, RoutedEventArgs e)

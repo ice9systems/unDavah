@@ -30,8 +30,7 @@ namespace com.undavah.unDavah_PoC
             Win32Point win32Point = new Win32Point();
             GetCursorPos(ref win32Point);
 
-            Point pt = new Point((double)win32Point.X,
-                (double)win32Point.Y);
+            Point pt = new Point(win32Point.X, win32Point.Y);
 
             return pt;
         }

@@ -31,6 +31,16 @@ namespace com.undavah.unDavah_PoC
                             ""warn"": {
                                 ""type"": ""CTRL""
                             }
+                        },
+                        {
+                            ""description"": ""BackSpace"",
+                            ""matchTo"": ""\\x08"",
+                            ""replaceTo"": ""^H"",
+                            ""fgcolor"": ""#ffff00"",
+                            ""bgcolor"": ""#ff0000"",
+                            ""warn"": {
+                                ""type"": ""CTRL""
+                            }
                         }
                     ],
                     ""doLast"": [
