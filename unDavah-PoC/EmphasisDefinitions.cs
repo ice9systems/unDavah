@@ -23,6 +23,16 @@ namespace com.undavah.unDavah_PoC
                     ],
                     ""rules"": [
                         {
+                            ""description"": ""Null"",
+                            ""matchTo"": ""\\x00"",
+                            ""replaceTo"": ""^@"",
+                            ""fgcolor"": ""#ffff00"",
+                            ""bgcolor"": ""#ff0000"",
+                            ""warn"": {
+                                ""type"": ""CTRL""
+                            }
+                        },
+                        {
                             ""description"": ""Tab"",
                             ""matchTo"": ""\\t"",
                             ""replaceTo"": ""[\\t]"",
@@ -36,7 +46,7 @@ namespace com.undavah.unDavah_PoC
                             ""description"": ""BackSpace"",
                             ""matchTo"": ""\\x08"",
                             ""replaceTo"": ""^H"",
-                            ""fgcolor"": ""#ffff00"",
+                            ""fgcolor"": ""#00ffff"",
                             ""bgcolor"": ""#ff0000"",
                             ""warn"": {
                                 ""type"": ""CTRL""

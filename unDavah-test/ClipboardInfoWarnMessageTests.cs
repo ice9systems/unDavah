@@ -54,5 +54,18 @@ namespace com.undavah.undavah.Tests
                 "The clipboard contains not text.",
                 warnMessage);
         }
+        [TestMethod]
+        public void ContainControlChar()
+        {
+            ClipboardInfo cbInfo = new ClipboardInfo();
+            var privateCbInfo = new PrivateObject(cbInfo);
+            privateCbInfo.SetProperty("ContainsText", true);
+            privateCbInfo.SetProperty("Text", "\x00");
+            String warnMessage = cbInfo.WarnMessage();
+            Assert.AreEqual(
+                "*** The clipboard contains CONTROL CHARACTER(S) ***" +
+                Environment.NewLine + "Please check it carefully.",
+                warnMessage);
+        }
     }
 }

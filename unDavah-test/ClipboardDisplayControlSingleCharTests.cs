@@ -21,6 +21,21 @@ namespace com.undavah.undavah.Tests
         }
 
         [TestMethod]
+        public void NullCharacterInTheMiddleOfString()
+        {
+            EmphasisRules empRules = EmphasisDefinitions.GetEmphasisRules();
+            ClipboardDisplayControl cbDisplayControl = new ClipboardDisplayControl();
+
+            cbDisplayControl.EmphasisRules = empRules;
+            cbDisplayControl.TextForDisplay = "Null is here->\x00<-";
+            var outputStr = cbDisplayControl.clipboardContntArea.Text;
+            Assert.AreEqual("<texts>Null<style bgcolor='#000000' fgcolor='#00ffff'>␣" +
+                "</style>is<style bgcolor='#000000' fgcolor='#00ffff'>␣" +
+                "</style>here-&amp;gt;<style bgcolor='#ff0000' fgcolor='#ffff00'>" +
+                "^@</style>&amp;lt;-</texts>", outputStr);
+        }
+
+        [TestMethod]
         public void WhiteSpace0x20()
         {
             EmphasisRules empRules = EmphasisDefinitions.GetEmphasisRules();
@@ -67,6 +82,26 @@ namespace com.undavah.undavah.Tests
 
             String source = "\t";
             String expectedReplaceTo = "[\\t]";
+            var ruleIsIn = empRules.rules;
+            TestConditionsForMatchRules cond = new TestConditionsForMatchRules(source, ruleIsIn);
+            Assert.AreEqual(cond.HitCount, 1);
+            Assert.AreEqual(expectedReplaceTo, cond.ReplaceTo);
+
+
+            cbDisplayControl.EmphasisRules = empRules;
+            cbDisplayControl.TextForDisplay = source;
+
+            var outputStr = cbDisplayControl.clipboardContntArea.Text;
+            Assert.AreEqual(cond.GetExpect(), outputStr);
+        }
+        [TestMethod]
+        public void Null()
+        {
+            EmphasisRules empRules = EmphasisDefinitions.GetEmphasisRules();
+            ClipboardDisplayControl cbDisplayControl = new ClipboardDisplayControl();
+
+            String source = "\x00";
+            String expectedReplaceTo = "^@";
             var ruleIsIn = empRules.rules;
             TestConditionsForMatchRules cond = new TestConditionsForMatchRules(source, ruleIsIn);
             Assert.AreEqual(cond.HitCount, 1);

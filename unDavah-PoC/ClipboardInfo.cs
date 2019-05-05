@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows;
+using System.Text.RegularExpressions;
 
 namespace com.undavah.unDavah_PoC
 {
@@ -11,7 +12,7 @@ namespace com.undavah.unDavah_PoC
         {
             if (Clipboard.ContainsText())
             {
-                this.Text = Clipboard.GetText();
+                this.Text = UDVClipboardLib.UDVGetClipboardString();
                 this.ContainsText = true;
                 return true;
             }
@@ -25,9 +26,20 @@ namespace com.undavah.unDavah_PoC
 
         public bool isUpToDate()
         {
-            if (Clipboard.GetText() == Text)
+            String currentClipboardText = "";
+            if (Clipboard.ContainsText() && this.ContainsText)
             {
-                return true;
+                currentClipboardText = UDVClipboardLib.UDVGetClipboardString();
+                if (currentClipboardText == this.Text)
+                {
+                    return true;
+                }
+                else
+                {
+                    String now = UDVClipboardLib.UDVGetClipboardString();
+
+                    return true;
+                }
             }
             else
             {
@@ -41,10 +53,17 @@ namespace com.undavah.unDavah_PoC
             {
                 return "The clipboard contains not text.";
             }
-            else if(Text == String.Empty)
+            else if (Text == String.Empty)
             {
                 return "The ClipBoard is empty.";
-            }else if(Text.Contains(Environment.NewLine))
+            }
+            else if (Regex.IsMatch(Regex.Replace(Text, Environment.NewLine, ""),
+                "[\x00-\x1f\x7f]"))
+            {
+                return "*** The clipboard contains CONTROL CHARACTER(S) ***" +
+                    Environment.NewLine + "Please check it carefully.";
+            }
+            else if(Text.Contains(Environment.NewLine))
             {
                 return "The clipboard contains multiple lines of text. " +
                     "Would you like to continue?";
@@ -54,9 +73,6 @@ namespace com.undavah.unDavah_PoC
                 return "Please confirm, The contents of your clipboard " +
                     "are as follows.";
             }
-
-            
         }
     }
-
 }

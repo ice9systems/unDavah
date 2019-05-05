@@ -15,7 +15,7 @@ namespace com.undavah.unDavah_PoC
             InitializeComponent();
             Environment.ExitCode = 1;
 
-            mousePointAtStartup = mouseCursorLib.GetPos();
+            mousePointAtStartup = UDVMouseCursorLib.GetPos();
 
             EmphasisRules empRules = EmphasisDefinitions.GetEmphasisRules();
 
@@ -48,7 +48,7 @@ namespace com.undavah.unDavah_PoC
                 Application.Current.Shutdown();
             }
 
-            mouseCursorLib.SetPos(mousePointAtStartup);
+            UDVMouseCursorLib.SetPos(mousePointAtStartup);
             Environment.ExitCode = 0;
             Application.Current.Shutdown();
         }
