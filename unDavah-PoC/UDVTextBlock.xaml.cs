@@ -15,7 +15,7 @@ namespace com.undavah.unDavah_PoC
     {
         private const String DEFAULT_FONT_COLOR_FG = "#00EE00";
         private const String DEFAULT_FONT_COLOR_BG = "#000000";
-
+            
         public static readonly DependencyProperty TextProperty =
             DependencyProperty.Register(
                 nameof(Text),

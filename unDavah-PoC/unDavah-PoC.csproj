@@ -52,7 +52,9 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -71,12 +73,19 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ClipboardDisplayControl.xaml.cs">
+      <DependentUpon>ClipboardDisplayControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ClipboardInfo.cs" />
     <Compile Include="EmphasisDefinitions.cs" />
     <Compile Include="mouseCursorLib.cs" />
     <Compile Include="UDVTextBlock.xaml.cs">
       <DependentUpon>UDVTextBlock.xaml</DependentUpon>
     </Compile>
+    <Page Include="ClipboardDisplayControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

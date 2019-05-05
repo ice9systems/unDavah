@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Windows;
-using System.Text.RegularExpressions;
 
 namespace com.undavah.unDavah_PoC
 {
@@ -25,47 +24,9 @@ namespace com.undavah.unDavah_PoC
                 cbInfo = new ClipboardInfo();
                 cbInfo.setCurrentClipboardText();
 
-                String modifiedClipboardStr = DoEmphasis(cbInfo.text, empRules);
-
-                clipboardContnt.Text = modifiedClipboardStr;
+                clipboardContnt.EmphasisRules = empRules;
+                clipboardContnt.TextForDisplay = cbInfo.Text;
             }
-        }
-
-        private string DoEmphasis(String aStr, EmphasisRules rules)
-        {
-            // Escaping Characters Used in XML
-            aStr = Regex.Replace(aStr, "<", "&lt;");
-            aStr = Regex.Replace(aStr, ">", "&gt;");
-            aStr = Regex.Replace(aStr, "&", "&amp;");
-
-            // apply High Priority rules
-            aStr = applyStyleTag(aStr, rules.doFirst);
-
-            // apply other rules
-            aStr = applyStyleTag(aStr, rules.rules);
-
-            // Apply last rules
-            aStr = applyStyleTag(aStr, rules.doLast);
-
-            // add a ROOT node
-            aStr = Regex.Replace(aStr, "^", "<texts>");
-            aStr = Regex.Replace(aStr, "$", "</texts>");
-
-            return aStr;
-        }
-
-        private String applyStyleTag(String aStr, EmphasisRules.Rule[] rules)
-        {
-            String replaceStr;
-            foreach (EmphasisRules.Rule aRule in rules)
-            {
-                replaceStr =
-                "<style bgcolor='" + aRule.bgcolor +
-                "' fgcolor='" + aRule.fgcolor + "'>" +
-                aRule.replaceTo + "</style>";
-                aStr = Regex.Replace(aStr, aRule.matchTo, replaceStr);
-            }
-            return aStr;
         }
 
         private void Confirmed(object sender, RoutedEventArgs e)

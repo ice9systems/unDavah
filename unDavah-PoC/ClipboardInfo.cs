@@ -9,11 +9,11 @@ namespace com.undavah.unDavah_PoC
 {
     class ClipboardInfo
     {
-        public String text { get; private set; }
+        public String Text { get; private set; }
         public bool setCurrentClipboardText()
         {
             if (Clipboard.ContainsText()) {
-                text = Clipboard.GetText();
+                Text = Clipboard.GetText();
                 return true;
             }
             return false;
@@ -21,7 +21,7 @@ namespace com.undavah.unDavah_PoC
 
         public bool isUpToDate()
         {
-            if (Clipboard.GetText() == text)
+            if (Clipboard.GetText() == Text)
             {
                 return true;
             }
