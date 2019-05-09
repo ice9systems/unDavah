@@ -3,7 +3,11 @@
 ## unDavahって何？ (What is unDavah?)
 unDavahは、PuTTYやWindows 10でのコマンドプロンプトなど、右クリックが即ペーストな環境で安全に作業するための小さなツールです。
 現在のところ、AutoHotkeyから呼び出す形式をとっています。   
-(unDavah is a small tool that lets you work safely in right-click paste environments, such as PuTTY and the Windows 10 command prompt. The current implementation works as a call from AutoHotkey.)
+(unDavah is a small tool that lets you work safely in right-click paste environments, such as PuTTY and the Windows 10 command prompt. The current implementation works as a call from AutoHotkey.)  
+ついでですが、紛らわしい文字については色分けし、ASCIIレンジ以外の文字については強調します。  
+(In addition, similar characters are shown in different colors and characters outside the ASCII range are emphasized.)
+![hyphens](./Document_images/README.md/VSCodevsUnDavah.png)  
+
 ## どんな役に立つの？ (How does it help?)
 クリップボードに改行を含む文字列が入った状態でうっかりPuTTYのウィンドウで右クリック→一部コマンドとして実行される、という悲劇を防ぐために、いったんダイアログを表示して確認を求めます。   
 (If you inadvertently right-click in the PuTTY window with a line break in the clipboard, some of it is executed as a command. To prevent that tragedy, we display a dialog once and ask for confirmation.)
@@ -19,7 +23,7 @@ unDavahは、PuTTYやWindows 10でのコマンドプロンプトなど、右ク�
 (The AHK must first determine if unDavah is required before calling it. Then, send a right click after finishing.)
 ## なぜ作ったか (Why did I write unDavah?)
 元々はAHKスクリプトのみで実現していた機能ですが、マルチモニタ環境でモニタのスケーリングが混在している場合にうまく動作しないことがありました。調べてみると、マウスポインタの座標がうまく扱えていない様子ですし、また長大なテキストがクリップボードに入っているとダイアログが画面からはみ出すようなこともあったため、休暇を利用して作成しました。  
-(Originally implemented only in AHK scripts, it does not work well with mixed monitor scaling in multi-monitor environments. I investigated the cause. As a result, I found that the coordinates of the mouse pointer were not handled well. Also, if I use it when I have long text on the clipboard, the dialog will overflow the screen. So I wrote this using my vacation.)
+(Originally implemented only in AHK scripts, it does not work well with mixed monitor scaling in multi-monitor environments. I investigated the cause. As a result, I found that the coordinates of the mouse pointer were not handled well. Also, if I use it when I have long text on the clipboard, the dialog will overflow the screen. So I wrote this using during vacation.)
 
 ## AHKスクリプトのサンプル (Sample of AHK script)
 バイナリを`C:\opt\unDavah\unDavah-PoC.exe`に配置したなら、次のように.ahkスクリプトから呼び出せます。  
