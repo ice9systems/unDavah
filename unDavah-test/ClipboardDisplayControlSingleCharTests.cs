@@ -30,10 +30,24 @@ namespace com.undavah.undavah.Tests
             cbDisplayControl.EmphasisRules = empRules;
             cbDisplayControl.TextForDisplay = "Null is here->\x00<-";
             var outputStr = cbDisplayControl.clipboardContntArea.Text;
-            Assert.AreEqual("<texts>Null<style bgcolor='#000000' fgcolor='#00ffff'>␣" +
-                "</style>is<style bgcolor='#000000' fgcolor='#00ffff'>␣" +
-                "</style>here-&amp;gt;<style bgcolor='#ff0000' fgcolor='#ffff00'>" +
-                "^@</style>&amp;lt;-</texts>", outputStr);
+            Assert.AreEqual("<texts><style bgcolor='#000000' " +
+                "fgcolor='#00ff33'>N</style><style bgcolor='#000000' " +
+                "fgcolor='#00dd33'>u</style><style bgcolor='#000000' " +
+                "fgcolor='#00dd33'>l</style><style bgcolor='#000000' " +
+                "fgcolor='#00dd33'>l</style><style bgcolor='#000000' " +
+                "fgcolor='#00ffff'>␣</style><style bgcolor='#000000' " +
+                "fgcolor='#00dd33'>i</style><style bgcolor='#000000' " +
+                "fgcolor='#00dd33'>s</style><style bgcolor='#000000' " +
+                "fgcolor='#00ffff'>␣</style><style bgcolor='#000000' " + 
+                "fgcolor='#00dd33'>h</style><style bgcolor='#000000' " +
+                "fgcolor='#00dd33'>e</style><style bgcolor='#000000' " +
+                "fgcolor='#00dd33'>r</style><style bgcolor='#000000' " +
+                "fgcolor='#00dd33'>e</style><style bgcolor='#000000' " +
+                "fgcolor='#0088ff'>-</style><style bgcolor='#000000' " +
+                "fgcolor='#ffd700'>&gt;</style><style bgcolor='#ff0000' " +
+                "fgcolor='#ffff00'>^@</style><style bgcolor='#000000' " +
+                "fgcolor='#ffd700'>&lt;</style><style bgcolor='#000000' " +
+                "fgcolor='#0088ff'>-</style></texts>", outputStr);
         }
 
         [TestMethod]
