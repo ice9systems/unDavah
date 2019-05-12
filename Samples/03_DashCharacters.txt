@@ -1,0 +1,6 @@
+**** Sample file 3 DASH Characters ****
+- HYPHEN(0x2d)
+‒ FIGURE DASH(U+2012)
+– EN DASH(U+2013)
+— EM DASH(U+2014)
+— HORIZONTAL BAR(U+2015)

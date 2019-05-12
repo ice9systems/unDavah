@@ -1,0 +1,7 @@
+**** Sample file 2 ASCII Characters ****
+!"#$%'()*+,-./
+0123456789:;<=>?
+@ABCDEFGHIJKLMNO
+PQRSTUVWXYZ[\]^_
+`abcdefghijklmno
+pqrstuvwxyz{|}-
