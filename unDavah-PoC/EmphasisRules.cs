@@ -13,23 +13,6 @@ namespace com.undavah.unDavah_PoC
         [DataMember]
         public Rule[] doLast { get; set; }
 
-        [DataContract]
-        public class Global
-        {
-            [DataMember]
-            public GlobalOptions newline { get; set; }
-            [DataMember]
-            public GlobalOptions whiteSpace0x20 { get; set; }
-        }
-
-        [DataContract]
-        public class GlobalOptions
-        {
-            [DataMember]
-            public string fgcolor { get; set; }
-            [DataMember]
-            public string bgcolor { get; set; }
-        }
 
         [DataContract]
         public class Rule

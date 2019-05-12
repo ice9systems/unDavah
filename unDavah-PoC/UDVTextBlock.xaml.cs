@@ -13,8 +13,8 @@ namespace com.undavah.unDavah_PoC
     /// </summary>
     public partial class UDVTextBlock : UserControl
     {
-        private const String DEFAULT_FONT_COLOR_FG = "#00EE00";
-        private const String DEFAULT_FONT_COLOR_BG = "#000000";
+        private const String DEFAULT_FONT_COLOR_FG = "#ffffff";
+        private const String DEFAULT_FONT_COLOR_BG = "#cc6c00";
             
         public static readonly DependencyProperty TextProperty =
             DependencyProperty.Register(

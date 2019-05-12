@@ -6,10 +6,11 @@ namespace com.undavah.undavah.Tests
 {
     internal class TestConditionsForMatchRules
     {
-        public String Source { get; set; }
+        public String Source { get; private set; }
         public String BgColor { get; private set; }
         public String FgColor { get; private set; }
-        public String ReplaceTo { get; set; }
+        public String MatchTo { get; private set; }
+        public String ReplaceTo { get; private set; }
         public int HitCount { get; private set; }
 
         public TestConditionsForMatchRules(String srcText, EmphasisRules.Rule[] rules)
@@ -22,6 +23,7 @@ namespace com.undavah.undavah.Tests
                 {
                     BgColor = aRule.bgcolor;
                     FgColor = aRule.fgcolor;
+                    MatchTo = aRule.matchTo;
                     ReplaceTo = aRule.replaceTo;
                     HitCount++;
                 }
@@ -29,8 +31,9 @@ namespace com.undavah.undavah.Tests
         }
         public String GetExpect()
         {
-            return "<texts><style bgcolor='" + BgColor + "' fgcolor='" +
-                FgColor + "'>" + ReplaceTo + "</style></texts>";
+            String pattern =  $"<texts><style bgcolor='{BgColor}' fgcolor='" +
+                $"{FgColor}'>{ReplaceTo}</style></texts>";
+            return Regex.Replace(Source, MatchTo, pattern);
         }
     }
 }
